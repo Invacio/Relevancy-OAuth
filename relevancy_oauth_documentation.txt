@@ -1,0 +1,39 @@
+Basic requirements:
+
+1) Include latest jQuery Library
+=> <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+2) Once include latest jQuery Library include INVACIO SDK 
+=> <script type="text/javascript">
+			(function(d, s, id){
+			    var js, ijs = d.getElementsByTagName(s)[0];
+			    if (d.getElementById(id)) {return;}
+			    js = d.createElement(s); js.id = id;
+			    js.src = "https://relevancy.invacio.com/invacio_oauth/sdk.js";
+			    ijs.parentNode.insertBefore(js, ijs);
+			}(document, 'script', 'invacio-jssdk'));
+	</script>
+	
+=> SDK allows to create custom authentication popup where user can login their RELEVANCY Account.
+
+3) After including SDK create button or link somewhere in <body> part for signup button (Signup With Relevancy)
+=> For Example: <button id="signup_with_relevancy" name="signup_with_relevancy" onclick="init_relevancy_signup();">Signup With Relevancy</button>
+
+4) Create JS function which help to call oAuth API URL
+=> <script type="text/javascript">
+			function init_relevancy_signup(){
+				$.oauth_invacio({
+			    siteName: '<site name>'
+				});
+			}
+	 </script>
+=> <site name> replace with your site name. If it will not mention then api will not call.
+
+5) Once above requirements implement then you've to call response receive function which was passed using BROWSER's MESSAGE functionality.
+=> <script type="text/javascript">
+			$(window).on('message', function(e){
+				var jsonData = JSON.parse(e.originalEvent.data);
+			});
+	 </script>
+=> You can get JSON formated values of First Name, Last Name, Username, Email address and Contact Number (if have). For example: jsonData.oAuthFirstName is will return User's First name.
+=> These are the basic information which can be use for signup process.
